@@ -1,0 +1,10 @@
+{
+  "name": "watcheang-exam-generator",
+  "version": "1.0.0",
+  "description": "Generate Khmer exam papers as A4 PDFs from JSON.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node serve.js"
+  }
+}

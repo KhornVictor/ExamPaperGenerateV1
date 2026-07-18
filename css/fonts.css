@@ -1,0 +1,19 @@
+/* Khmer OS Siemreap — body font for the whole exam paper.
+   Copied from C:\Windows\Fonts. Replace the file in /fonts to swap fonts. */
+@font-face {
+  font-family: "Khmer OS Siemreap";
+  src: url("../fonts/KhmerOSsiemreap.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+/* Khmer OS Moul — used only for the school/organisation heading, which is
+   set in a moul-style face on the source paper. */
+@font-face {
+  font-family: "Khmer OS Moul";
+  src: url("../fonts/KhmerOSMoul.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}

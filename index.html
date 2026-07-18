@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Exam Paper Generator</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/exam.css">
+</head>
+<body>
+  <div class="toolbar">
+    <span class="toolbar__title">Exam Paper Generator</span>
+
+    <label class="btn" for="open-file">Open JSON…</label>
+    <input type="file" id="open-file" accept=".json,application/json" hidden>
+
+    <button type="button" class="btn" id="format-json">Format</button>
+    <button type="button" class="btn" id="save-json">Save JSON</button>
+
+    <label class="toggle">
+      <input type="checkbox" id="answers-toggle">
+      Answer key
+    </label>
+
+    <button type="button" class="btn btn--primary" id="print">Print / Save as PDF</button>
+  </div>
+
+  <div class="workspace">
+    <div class="editor">
+      <div class="editor__head">Exam JSON</div>
+      <textarea id="editor" class="editor__input" spellcheck="false"
+                aria-label="Exam JSON source"></textarea>
+      <div id="status" class="editor__status">Loading…</div>
+    </div>
+
+    <main id="preview" class="preview"></main>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

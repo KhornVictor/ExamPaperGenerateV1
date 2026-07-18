@@ -1,0 +1,263 @@
+/* ==========================================================================
+   exam.css — the exam paper itself (A4). These rules must look identical on
+   screen and on paper, so everything here is sized in mm/pt, never px.
+   ========================================================================== */
+
+:root {
+  --paper-w: 210mm;
+  --paper-h: 297mm;
+  --paper-margin: 15mm;
+
+  --font-body: "Khmer OS Siemreap", serif;
+  --font-heading: "Khmer OS Moul", "Khmer OS Siemreap", serif;
+
+  --size-body: 9pt;
+  --size-small: 8pt;
+  --size-title: 9pt;
+  --size-school: 10pt;
+
+  --rule: 0.4pt solid #000;
+}
+
+.paper {
+  width: var(--paper-w);
+  min-height: var(--paper-h);
+  padding: var(--paper-margin);
+  margin: 0 auto;
+  background: #fff;
+  color: #000;
+  box-sizing: border-box;
+  font-family: var(--font-body);
+  font-size: var(--size-body);
+  /* Khmer needs generous leading — stacked subscripts and vowels sit well
+     outside the Latin em box and collide at normal line-height. */
+  line-height: 2;
+}
+
+/* --- masthead ------------------------------------------------------------ */
+
+.masthead {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 6mm;
+  align-items: end;
+}
+
+.masthead__school {
+  font-family: var(--font-heading);
+  font-size: var(--size-school);
+  line-height: 1.6;
+}
+
+.masthead__exam {
+  font-size: var(--size-body);
+}
+
+.masthead__right {
+  text-align: center;
+  padding-bottom: 1mm;
+  align-self: end;
+}
+
+/* Divider under the masthead. The underscore run is deliberately longer than
+   the paper is wide and clipped to the content box: underscores are a single
+   unbreakable word, so without this they overflow the right margin instead of
+   wrapping. The count only has to be "more than enough". */
+.masthead__divider {
+  white-space: nowrap;
+  overflow: hidden;
+  line-height: 1;
+  margin-top: 2mm;
+}
+
+/* Label + rule-to-the-edge rows (name, date of birth, signature …) */
+.fields {
+  margin-top: 0.5mm;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 1mm;
+}
+
+.field__label {
+  white-space: nowrap;
+}
+
+.field__rule {
+  flex: 1;
+  border-bottom: var(--rule);
+  /* The row is baseline-aligned, so the rule lands on the label's baseline and
+     strikes through its descenders. Khmer subscripts (្រ, ្ខ …) reach ~2.1mm
+     below the baseline at this size, so drop the rule clear of them. Rows are
+     ~7mm apart, so this cannot touch the line below. */
+  transform: translateY(1.5mm);
+}
+
+/* --- paper title --------------------------------------------------------- */
+
+.paper-title {
+  text-align: center;
+  margin: 5mm 0 6mm;
+}
+
+.paper-title__main {
+  font-size: var(--size-title);
+}
+
+.paper-title__duration {
+  font-size: var(--size-body);
+}
+
+/* --- sections ------------------------------------------------------------ */
+
+.section {
+  margin-bottom: 3mm;
+  /* Never strand a section heading alone at the foot of a page. */
+  break-inside: auto;
+}
+
+.section__head {
+  display: flex;
+  align-items: baseline;
+  gap: 3mm;
+  margin-bottom: 2mm;
+  break-after: avoid;
+}
+
+.section__numeral {
+  min-width: 8mm;
+}
+
+.section__title {
+  flex: 1;
+}
+
+.section__points {
+  white-space: nowrap;
+}
+
+.question {
+  margin-bottom: 2mm;
+  padding-left: 8mm;
+  break-inside: avoid;
+}
+
+.question__head {
+  display: flex;
+  gap: 2mm;
+  align-items: baseline;
+}
+
+.question__num {
+  min-width: 6mm;
+  flex-shrink: 0;
+}
+
+.question__text {
+  flex: 1;
+}
+
+/* --- I. multiple choice -------------------------------------------------- */
+
+.choices {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1mm 2mm;
+  padding-left: 8mm;
+  margin-top: 1mm;
+}
+
+.choice {
+  display: flex;
+  align-items: center;
+  gap: 1.5mm;
+}
+
+.choice__box {
+  width: 4mm;
+  height: 4mm;
+  border: 0.6pt solid #000;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9pt;
+  line-height: 1;
+}
+
+/* --- II. matching -------------------------------------------------------- */
+
+.matching {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.matching th,
+.matching td {
+  border: var(--rule);
+  padding: 1mm 2mm;
+  vertical-align: middle;
+  line-height: 1.8;
+}
+
+.matching th {
+  font-weight: normal;
+  text-align: center;
+}
+
+.matching col.col-a { width: 45%; }
+.matching col.col-b { width: 40%; }
+.matching col.col-answer { width: 15%; }
+
+.matching__answer {
+  white-space: nowrap;
+}
+
+/* --- III. fill in the gaps ----------------------------------------------- */
+
+/* A blank is an inline dotted rule that flows with the sentence and can break
+   across lines like any other inline content. */
+.blank {
+  display: inline-block;
+  border-bottom: 0.6pt dotted #000;
+  min-width: 25mm;
+  text-align: center;
+  transform: translateY(-0.5mm);
+}
+
+.blank--filled {
+  border-bottom-style: solid;
+}
+
+/* --- IV. writing space --------------------------------------------------- */
+
+/* Ruled space for the student's handwritten answer.
+   These lines are real borders, not a background gradient: Chrome's print
+   dialog leaves "Background graphics" unchecked by default, which silently
+   drops any background-painted rule. Borders always print. */
+.answer-lines {
+  margin: 1mm 0 2mm;
+}
+
+.answer-line {
+  height: 8mm;
+  border-bottom: 0.4pt solid #767676;
+}
+
+/* Blank (unruled) writing space. */
+.answer-space {
+  margin: 1mm 0 2mm;
+}
+
+/* --- answer key ---------------------------------------------------------- */
+
+.answer {
+  color: #b00020;
+}
+
+.paper:not(.paper--answers) .answer-only {
+  display: none;
+}

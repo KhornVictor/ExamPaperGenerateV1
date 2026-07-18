@@ -1,0 +1,166 @@
+/* ==========================================================================
+   app.css — the editor UI around the paper. All of this is hidden when
+   printing; only .paper survives onto the PDF.
+   ========================================================================== */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, "Segoe UI", sans-serif;
+  background: #e5e7eb;
+  color: #111827;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- toolbar ------------------------------------------------------------- */
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: #1f2937;
+  color: #f9fafb;
+  flex-shrink: 0;
+}
+
+.toolbar__title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-right: auto;
+}
+
+.btn {
+  font: inherit;
+  font-size: 13px;
+  padding: 7px 14px;
+  border: 1px solid #4b5563;
+  border-radius: 6px;
+  background: #374151;
+  color: #f9fafb;
+  cursor: pointer;
+}
+
+.btn:hover { background: #4b5563; }
+
+.btn--primary {
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+.btn--primary:hover { background: #1d4ed8; }
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  /* user-select: none; */
+}
+
+/* --- layout -------------------------------------------------------------- */
+
+.workspace {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(320px, 30%) 1fr;
+  min-height: 0;
+}
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #d1d5db;
+  background: #f9fafb;
+  min-height: 0;
+}
+
+.editor__head {
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6b7280;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.editor__input {
+  flex: 1;
+  border: 0;
+  resize: none;
+  padding: 12px;
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  tab-size: 2;
+  outline: none;
+  min-height: 0;
+}
+
+.editor__status {
+  padding: 8px 12px;
+  font-size: 12px;
+  border-top: 1px solid #e5e7eb;
+  background: #f0fdf4;
+  color: #166534;
+  white-space: pre-wrap;
+  max-height: 25vh;
+  overflow: auto;
+}
+
+.editor__status--error {
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.preview {
+  overflow: auto;
+  padding: 24px;
+  min-height: 0;
+}
+
+.preview .paper {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+  margin-bottom: 24px;
+}
+
+/* --- print --------------------------------------------------------------- */
+
+@page {
+  size: A4;
+  /* The paper carries its own margin, so the page box takes none. Browser
+     headers/footers are switched off in the print dialog. */
+  margin: 0;
+}
+
+@media print {
+  body {
+    background: #fff;
+    display: block;
+    height: auto;
+  }
+
+  .toolbar,
+  .editor {
+    display: none !important;
+  }
+
+  .workspace {
+    display: block;
+  }
+
+  .preview {
+    padding: 0;
+    overflow: visible;
+  }
+
+  .preview .paper {
+    box-shadow: none;
+    margin: 0;
+  }
+}
